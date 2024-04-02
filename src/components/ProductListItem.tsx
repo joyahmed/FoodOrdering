@@ -1,5 +1,5 @@
+import Colors from '@/constants/Colors';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import Colors from '../constants/Colors';
 
 const ProductListItem = ({ product }: { product: ProductProps }) => {
 	return (
