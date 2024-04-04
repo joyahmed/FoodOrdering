@@ -13,7 +13,7 @@ function TabBarIcon(props: {
 	color: string;
 }) {
 	return (
-		<FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />
+		<FontAwesome size={20} style={{ marginBottom: -3 }} {...props} />
 	);
 }
 
@@ -31,11 +31,16 @@ export default function TabLayout() {
 		>
 			<Tabs.Screen
 				name='index'
+				options={{ href: null,  }}
+			/>
+
+			<Tabs.Screen
+				name='menu'
 				options={{
-					title: 'Pizza',
-					headerTitleAlign: 'center',
+					title: 'Menu',
+					headerShown: false,
 					tabBarIcon: ({ color }) => (
-						<TabBarIcon name='code' color={color} />
+						<TabBarIcon name='cutlery' color={color} />
 					),
 					headerRight: () => (
 						<Link href='/modal' asChild>
@@ -59,10 +64,10 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name='two'
 				options={{
-					title: 'Tab Two',
+					title: 'Orders',
 					headerTitleAlign: 'center',
 					tabBarIcon: ({ color }) => (
-						<TabBarIcon name='code' color={color} />
+						<TabBarIcon name='list' color={color} />
 					)
 				}}
 			/>
