@@ -3,9 +3,9 @@ import { Link, Tabs } from 'expo-router';
 import React from 'react';
 import { Pressable } from 'react-native';
 
-import { useClientOnlyValue } from '@/src/components/useClientOnlyValue';
-import { useColorScheme } from '@/src/components/useColorScheme';
-import Colors from '@/src/constants/Colors';
+import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { useColorScheme } from '@/components/useColorScheme';
+import Colors from '@/constants/Colors';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -32,7 +32,8 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name='index'
 				options={{
-					title: 'Tab One',
+					title: 'Pizza',
+					headerTitleAlign: 'center',
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name='code' color={color} />
 					),
@@ -59,6 +60,7 @@ export default function TabLayout() {
 				name='two'
 				options={{
 					title: 'Tab Two',
+					headerTitleAlign: 'center',
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name='code' color={color} />
 					)
