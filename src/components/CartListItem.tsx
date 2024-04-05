@@ -17,7 +17,7 @@ type CartListItemProps = {
 };
 
 const CartListItem = ({ cartItem }: CartListItemProps) => {
-	const {updateQuantity} = useCart();
+	const { updateQuantity } = useCart();
 
 	return (
 		<View style={styles.container}>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 	},
 	quantity: {
 		fontWeight: '500',
-		fontSize: 18
+		fontSize: 16
 	},
 	price: {
 		color: Colors.light.tint,
