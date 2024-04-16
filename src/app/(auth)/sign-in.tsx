@@ -1,3 +1,4 @@
+import { supabase } from '@/lib/supabase';
 import { Link, Stack } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -9,7 +10,6 @@ import {
 } from 'react-native';
 import Button from '../../components/Button';
 import Colors from '../../constants/Colors';
-// import { supabase } from '@/lib/supabase';
 
 const SignInScreen = () => {
 	const [email, setEmail] = useState('');
@@ -18,12 +18,12 @@ const SignInScreen = () => {
 
 	async function signInWithEmail() {
 		setLoading(true);
-		// const { error } = await supabase.auth.signInWithPassword({
-		//   email,
-		//   password,
-		// });
+		const { error } = await supabase.auth.signInWithPassword({
+			email,
+			password
+		});
 
-		// if (error) Alert.alert(error.message);
+		if (error) Alert.alert(error.message);
 		setLoading(false);
 	}
 
