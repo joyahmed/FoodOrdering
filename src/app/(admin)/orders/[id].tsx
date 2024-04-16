@@ -24,12 +24,19 @@ const OrderDetailsScreen = () => {
 
 	return (
 		<View style={{ padding: 10, gap: 20, flex: 1 }}>
-			<Stack.Screen options={{ title: `Order #${id}` }} />
+			<Stack.Screen
+				options={{
+					title: `Order #${id}`,
+					headerTitleAlign: 'center'
+				}}
+			/>
 
 			{order && order.order_items ? (
 				<FlatList
 					data={order.order_items}
-					renderItem={({ item }) => <OrderListItemDetail item={item} />}
+					renderItem={({ item }) => (
+						<OrderListItemDetail item={item} />
+					)}
 					contentContainerStyle={{ gap: 10 }}
 					ListHeaderComponent={() => <OrderListItem order={order} />}
 					ListFooterComponent={() => (

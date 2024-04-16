@@ -42,7 +42,6 @@ export default function TabLayout() {
 				options={{
 					title: 'Orders',
 					headerShown: false,
-					headerTitleAlign: 'center',
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name='list' color={color} />
 					)

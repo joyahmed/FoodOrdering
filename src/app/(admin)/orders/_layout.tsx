@@ -1,13 +1,17 @@
-import Colors from '@/constants/Colors';
-import { FontAwesome } from '@expo/vector-icons';
-import { Link, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import React from 'react';
-import { Pressable } from 'react-native';
 
 const OrderStack = () => {
 	return (
 		<Stack>
-			<Stack.Screen name='index' options={{ title: 'Orders' }} />
+			{/* <Stack.Screen
+				name='index'
+				options={{ title: 'Orders', headerTitleAlign: 'center' }}
+			/> */}
+			<Stack.Screen
+				name='list'
+				options={{ title: 'list', headerShown: false }}
+			/>
 		</Stack>
 	);
 };

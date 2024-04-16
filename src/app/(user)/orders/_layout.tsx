@@ -7,7 +7,7 @@ import { Pressable } from 'react-native';
 const OrderStack = () => {
 	return (
 		<Stack>
-			<Stack.Screen name='index' options={{ title: 'Orders' }} />
+			<Stack.Screen name='index' options={{ title: 'Orders', headerTitleAlign: 'center' }} />
 		</Stack>
 	);
 };

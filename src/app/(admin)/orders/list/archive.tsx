@@ -2,7 +2,7 @@ import OrderListItem from '@/components/OrderListItem';
 import orders from '@assets/data/orders';
 import { FlatList, Text } from 'react-native';
 
-const MenuScreen = () => {
+const OrderScreen = () => {
 	return (
 		<FlatList
 			data={orders}
@@ -14,4 +14,4 @@ const MenuScreen = () => {
 	);
 };
 
-export default MenuScreen;
+export default OrderScreen;
