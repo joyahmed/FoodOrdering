@@ -36,5 +36,8 @@ interface OrderProps {
 	order_items: OrderItemProps[];
 }
 
-
 type AppSegments = '(admin)' | '(user)';
+
+type OrderStatus = 'New' | 'Cooking' | 'Delivering' | 'Delivered';
+
+
