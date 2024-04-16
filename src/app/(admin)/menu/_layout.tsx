@@ -31,8 +31,6 @@ const MenuStack = () => {
 					headerTitleAlign: 'center'
 				}}
 			/>
-
-
 		</Stack>
 	);
 };

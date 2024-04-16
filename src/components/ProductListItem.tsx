@@ -1,11 +1,9 @@
 import Colors from '@/constants/Colors';
-import { Link, usePathname, useSegments } from 'expo-router';
+import { Link, useSegments } from 'expo-router';
 import { Image, Pressable, StyleSheet, Text } from 'react-native';
 
 export const defaultPizzaImage =
 	'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png';
-
-type AppSegments = '(admin)' | '(user)';
 
 const ProductListItem = ({ product }: { product: ProductProps }) => {
 	const segments = useSegments();
