@@ -1,7 +1,7 @@
 import Button from '@/components/Button';
 import Colors from '@/constants/Colors';
 import { supabase } from '@/lib/supabase';
-import { Link, Stack } from 'expo-router';
+import { Link, Redirect, Stack } from 'expo-router';
 import React, { useState } from 'react';
 import {
 	Alert,
@@ -21,6 +21,14 @@ const SignUpScreen = () => {
 		const { error } = await supabase.auth.signUp({ email, password });
 
 		if (error) Alert.alert(error.message);
+		else {
+			Alert.alert(`Signed up successfully! Please, sign in to continue!
+			`);
+			// return setTimeout(
+			// 	() => <Redirect href={'/(auth)/sign-in'} />,
+			// 	3000
+			// );
+		}
 		setLoading(false);
 	}
 
@@ -34,7 +42,7 @@ const SignUpScreen = () => {
 			<TextInput
 				value={email}
 				onChangeText={setEmail}
-				placeholder='jon@gmail.com'
+				placeholder='joy@gmail.com'
 				style={styles.input}
 			/>
 

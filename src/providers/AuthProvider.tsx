@@ -10,22 +10,39 @@ import {
 
 interface AuthContextProps {
 	session: Session | null;
+	profile: any;
 	loading: boolean;
+	isAdmin: boolean;
 }
 
 const AuthContext = createContext<AuthContextProps>({
 	session: null,
-	loading: true
+	profile: null,
+	loading: true,
+	isAdmin: false
 });
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
 	const [session, setSession] = useState<Session | null>(null);
+	const [profile, setProfile] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const fetchSession = async () => {
-			const { data } = await supabase.auth.getSession();
-			setSession(data.session);
+			const {
+				data: { session }
+			} = await supabase.auth.getSession();
+			setSession(session);
+
+			if (session) {
+				const { data } = await supabase
+					.from('profiles')
+					.select('*')
+					.eq('id', session.user.id)
+					.single();
+				//eslint-disable-next-line
+				setProfile(data || null);
+			}
 			setLoading(false);
 		};
 		fetchSession();
@@ -34,8 +51,16 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
 		});
 	}, []);
 
+
 	return (
-		<AuthContext.Provider value={{ session, loading }}>
+		<AuthContext.Provider
+			value={{
+				session,
+				profile,
+				loading,
+				isAdmin: profile?.group === 'ADMIN'
+			}}
+		>
 			{children}
 		</AuthContext.Provider>
 	);
