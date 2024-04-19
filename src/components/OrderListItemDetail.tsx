@@ -5,10 +5,11 @@ import { defaultPizzaImage } from './ProductListItem';
 // import RemoteImage from './RemoteImage';
 
 type OrderListItemDetailProps = {
-	item: OrderItemProps;
+	item: Tables<'order_items'>;
 };
 
 const OrderListItemDetail = ({ item }: OrderListItemDetailProps) => {
+	console.log(`item => =>`, item);
 	return (
 		<View style={styles.container}>
 			{/* <RemoteImage
