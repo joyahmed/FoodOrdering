@@ -6,12 +6,11 @@ import {
 	useState
 } from 'react';
 
+type Product = Tables<'products'>;
+
 interface CartContextProps {
 	items: CartItemProps[];
-	addItem: (
-		product: ProductProps,
-		size: CartItemProps['size']
-	) => void;
+	addItem: (product: Product, size: CartItemProps['size']) => void;
 	updateQuantity: (itemId: string, amount: -1 | 1) => void;
 	total: number;
 }
@@ -26,10 +25,7 @@ export const CartContext = createContext<CartContextProps>({
 const CartProvider = ({ children }: PropsWithChildren) => {
 	const [items, setItems] = useState<CartItemProps[]>([]);
 
-	const addItem = (
-		product: ProductProps,
-		size: CartItemProps['size']
-	) => {
+	const addItem = (product: Product, size: CartItemProps['size']) => {
 		// if already in cart, increment quantity
 		const existingItem = items.find(
 			item => item.product === product && item.size == size
