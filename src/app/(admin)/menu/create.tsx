@@ -1,10 +1,15 @@
-import { useInsertProduct } from '@/api/products';
+import {
+	useInsertProduct,
+	useProductById,
+	useProductList,
+	useUpdateProduct
+} from '@/api/products';
 import Button from '@/components/Button';
 import { defaultPizzaImage } from '@/components/ProductListItem';
 import Colors from '@/constants/Colors';
 import * as ImagePicker from 'expo-image-picker';
-import { Stack, router, useLocalSearchParams } from 'expo-router';
-import React, { useState } from 'react';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
 	Alert,
 	Image,
@@ -14,16 +19,31 @@ import {
 	View
 } from 'react-native';
 
-const CreateProductScreen = () => {
+const onCreateScreen = () => {
 	const [name, setName] = useState('');
 	const [price, setPrice] = useState('');
 	const [errors, setErrors] = useState('');
 	const [image, setImage] = useState<string | null>(null);
 
-	const { id } = useLocalSearchParams();
+	const { id: idString } = useLocalSearchParams();
+	const id = parseFloat(
+		typeof idString === 'string' ? idString : idString?.[0]
+	);
 	const isUpdating = !!id;
 
 	const { mutate: insertProduct } = useInsertProduct();
+	const { mutate: updateProduct } = useUpdateProduct();
+	const { data: updatingProduct } = useProductById(id);
+
+	const router = useRouter();
+
+	useEffect(() => {
+		if (updatingProduct) {
+			setName(updatingProduct.name);
+			setPrice(updatingProduct.price.toString());
+			setImage(updatingProduct.image);
+		}
+	}, [updatingProduct]);
 
 	const validateInput = () => {
 		if (!name) {
@@ -45,42 +65,55 @@ const CreateProductScreen = () => {
 
 	const onSubmit = () => {
 		if (isUpdating) {
-			updateProduct();
+			onUpdate();
 		} else {
-			createProduct();
+			onCreate();
 		}
 	};
 
-	const createProduct = () => {
+	const onCreate = () => {
 		if (!validateInput()) {
 			return;
 		}
-		// console.warn('Creating product');
 
 		insertProduct(
 			{ name, price: parseFloat(price), image },
 			{
 				onSuccess: () => {
-					resetItems();
+					resetFields();
 					Alert.alert(`${name} is successfully created!`);
 					router.back();
 				}
 			}
 		);
 
-		resetItems();
+		resetFields();
 	};
 
-	const updateProduct = () => {
+	const onUpdate = () => {
 		if (!validateInput()) {
 			return;
 		}
-		console.warn('Updating product');
+		// console.warn('Updating product');
 
-		resetItems();
+		updateProduct(
+			{
+				id,
+				name,
+				price: parseFloat(price),
+				image
+			},
+			{
+				onSuccess: () => {
+					resetFields();
+					Alert.alert(`${name} is successfully updated!`);
+					router.back();
+				}
+			}
+		);
 	};
 
-	const resetItems = () => {
+	const resetFields = () => {
 		setName('');
 		setPrice('');
 	};
@@ -92,8 +125,6 @@ const CreateProductScreen = () => {
 			aspect: [4, 4],
 			quality: 1
 		});
-
-		console.log(result);
 
 		if (!result.canceled) {
 			setImage(result.assets[0].uri);
@@ -196,4 +227,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default CreateProductScreen;
+export default onCreateScreen;
