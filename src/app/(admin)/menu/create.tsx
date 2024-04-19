@@ -134,7 +134,6 @@ const onCreateScreen = () => {
 	};
 
 	const onDelete = () => {
-		// console.warn('DELETE!!!!');
 		deleteProduct(id, {
 			onSuccess: () => {
 				resetFields();

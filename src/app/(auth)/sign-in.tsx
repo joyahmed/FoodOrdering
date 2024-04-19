@@ -1,3 +1,5 @@
+import Button from '@/components/Button';
+import Colors from '@/constants/Colors';
 import { supabase } from '@/lib/supabase';
 import { Link, Stack } from 'expo-router';
 import React, { useState } from 'react';
@@ -8,8 +10,6 @@ import {
 	TextInput,
 	View
 } from 'react-native';
-import Button from '../../components/Button';
-import Colors from '../../constants/Colors';
 
 const SignInScreen = () => {
 	const [email, setEmail] = useState('');
