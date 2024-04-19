@@ -1,3 +1,4 @@
+import { useProductById } from '@/api/products';
 import Button from '@/components/Button';
 import { defaultPizzaImage } from '@/components/ProductListItem';
 import Colors from '@/constants/Colors';
@@ -12,6 +13,7 @@ import {
 } from 'expo-router';
 import React, { useState } from 'react';
 import {
+	ActivityIndicator,
 	Image,
 	Pressable,
 	StyleSheet,
@@ -22,7 +24,13 @@ import {
 const sizes: PizzaSizeProps[] = ['S', 'M', 'L', 'XL'];
 
 const ProductDetailScreen = () => {
-	const { id } = useLocalSearchParams();
+	const { id: idString } = useLocalSearchParams();
+
+	const id = parseFloat(
+		typeof idString === 'string' ? idString : idString[0]
+	);
+
+	const { data: product, error, isLoading } = useProductById(id);
 	const { addItem } = useCart();
 
 	const router = useRouter();
@@ -30,15 +38,15 @@ const ProductDetailScreen = () => {
 	const [selectedSize, setSelectedSize] =
 		useState<PizzaSizeProps>('M');
 
-	const product = products.find(p => p.id.toString() === id);
-
 	const addToCart = () => {
 		if (!product) return;
 		addItem(product, selectedSize);
 		router.push('/cart');
 	};
 
-	if (!product) return <Text>Product not found</Text>;
+	if (isLoading) return <ActivityIndicator />;
+
+	if (error) return <Text>Failed to fetch products</Text>;
 
 	return (
 		<View style={styles.container}>
@@ -67,17 +75,17 @@ const ProductDetailScreen = () => {
 			/>
 			<Stack.Screen
 				options={{
-					title: product.name,
+					title: product?.name,
 					headerTitleAlign: 'center'
 				}}
 			/>
 			<Image
-				source={{ uri: product.image || defaultPizzaImage }}
+				source={{ uri: product?.image || defaultPizzaImage }}
 				style={styles.image}
 			/>
 
-			<Text style={styles.title}>Title: {product.name}</Text>
-			<Text style={styles.price}>Price: ${product.price}</Text>
+			<Text style={styles.title}>Title: {product?.name}</Text>
+			<Text style={styles.price}>Price: ${product?.price}</Text>
 		</View>
 	);
 };

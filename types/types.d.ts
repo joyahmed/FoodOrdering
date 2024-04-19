@@ -4,7 +4,7 @@ type Tables<T extends keyof Database['public']['Tables']> =
 interface ProductProps {
 	id: number;
 	name: string;
-	image: string;
+	image: string | null;
 	price: number;
 }
 
@@ -39,5 +39,3 @@ interface OrderProps {
 type AppSegments = '(admin)' | '(user)';
 
 type OrderStatus = 'New' | 'Cooking' | 'Delivering' | 'Delivered';
-
-

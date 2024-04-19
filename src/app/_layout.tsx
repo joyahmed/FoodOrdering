@@ -1,5 +1,6 @@
 import AuthProvider from '@/providers/AuthProvider';
 import CartProvider from '@/providers/CartProvider';
+import QueryProvider from '@/providers/QueryProvider';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {
 	DarkTheme,
@@ -57,36 +58,38 @@ function RootLayoutNav() {
 			value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
 		>
 			<AuthProvider>
-				<CartProvider>
-					<Stack>
-						<Stack.Screen
-							name='index'
-							options={{ title: 'Main Menu', headerShown: false }}
-						/>
-						<Stack.Screen
-							name='(admin)'
-							options={{
-								headerShown: false
-							}}
-						/>
-						<Stack.Screen
-							name='(user)'
-							options={{
-								headerShown: false
-							}}
-						/>
-						<Stack.Screen
-							name='(auth)'
-							options={{
-								headerShown: false
-							}}
-						/>
-						{/* <Stack.Screen
-							name='cart'
-							options={{ presentation: 'modal' }}
-						/> */}
-					</Stack>
-				</CartProvider>
+				<QueryProvider>
+					<CartProvider>
+						<Stack>
+							<Stack.Screen
+								name='index'
+								options={{ title: 'Main Menu', headerShown: false }}
+							/>
+							<Stack.Screen
+								name='(admin)'
+								options={{
+									headerShown: false
+								}}
+							/>
+							<Stack.Screen
+								name='(user)'
+								options={{
+									headerShown: false
+								}}
+							/>
+							<Stack.Screen
+								name='(auth)'
+								options={{
+									headerShown: false
+								}}
+							/>
+							{/* <Stack.Screen
+								name='cart'
+								options={{ presentation: 'modal' }}
+							/> */}
+						</Stack>
+					</CartProvider>
+				</QueryProvider>
 			</AuthProvider>
 		</ThemeProvider>
 	);

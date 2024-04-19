@@ -1,21 +1,7 @@
-import ProductListItem from '@/components/ProductListItem';
-import products from '@assets/data/products';
-import { FlatList } from 'react-native';
+import MenuScreen from '@/components/MenuScreen';
 
-const MenuScreen = () => {
-	return (
-		<>
-			<FlatList
-				data={products}
-				renderItem={({ item }) => (
-					<ProductListItem {...{ product: item }} />
-				)}
-				numColumns={2}
-				contentContainerStyle={{ gap: 10, padding: 10 }}
-				columnWrapperStyle={{ gap: 10 }}
-			/>
-		</>
-	);
+const MenuScreenAdmin = () => {
+	return <MenuScreen />;
 };
 
-export default MenuScreen;
+export default MenuScreenAdmin;
