@@ -1,4 +1,5 @@
 import {
+	useDeleteProduct,
 	useInsertProduct,
 	useProductById,
 	useProductList,
@@ -34,6 +35,7 @@ const onCreateScreen = () => {
 	const { mutate: insertProduct } = useInsertProduct();
 	const { mutate: updateProduct } = useUpdateProduct();
 	const { data: updatingProduct } = useProductById(id);
+	const { mutate: deleteProduct } = useDeleteProduct();
 
 	const router = useRouter();
 
@@ -132,13 +134,20 @@ const onCreateScreen = () => {
 	};
 
 	const onDelete = () => {
-		console.warn('DELETE!!!!');
+		// console.warn('DELETE!!!!');
+		deleteProduct(id, {
+			onSuccess: () => {
+				resetFields();
+				Alert.alert(`${name} is successfully deleted!`);
+				router.replace('/(admin)');
+			}
+		});
 	};
 
 	const confirmDelete = () => {
 		Alert.alert(
 			'Confirm',
-			'Are you sure you want to delete this product?',
+			`Are you sure you want to delete this ${name}?`,
 			[
 				{
 					text: 'Cancel'
