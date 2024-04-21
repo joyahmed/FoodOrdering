@@ -6,7 +6,7 @@ import React from 'react';
 import { FlatList, Platform, Text, View } from 'react-native';
 
 const CartScreen = () => {
-	const { items, total } = useCart();
+	const { items, total, checkout } = useCart();
 	return (
 		<View style={{ padding: 10 }}>
 			<FlatList
@@ -23,7 +23,7 @@ const CartScreen = () => {
 				Total: ${total}
 			</Text>
 
-			<Button text='Checkout' />
+			<Button onPress={checkout} text='Checkout' />
 
 			<StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
 		</View>

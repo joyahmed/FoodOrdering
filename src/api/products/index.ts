@@ -42,7 +42,7 @@ export const useProductById = (id: number) => {
 export const useInsertProduct = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
-		async mutationFn(data: any) {
+		async mutationFn(data: Tables<'products'>) {
 			const { data: newProduct, error } = await supabase
 				.from('products')
 				.insert({
@@ -65,7 +65,7 @@ export const useInsertProduct = () => {
 export const useUpdateProduct = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
-		async mutationFn(data: any) {
+		async mutationFn(data: Tables<'products'>) {
 			const { data: updatedProduct, error } = await supabase
 				.from('products')
 				.update({

@@ -1,6 +1,15 @@
 type Tables<T extends keyof Database['public']['Tables']> =
 	Database['public']['Tables'][T]['Row'];
 
+type InsertTables<T extends keyof Database['public']['Tables']> =
+	Database['public']['Tables'][T]['Insert'];
+
+type UpdateTables<T extends keyof Database['public']['Tables']> =
+	Database['public']['Tables'][T]['Update'];
+
+type Enums<T extends keyof Database['public']['Enums']> =
+	Database['public']['Enums'][T];
+
 interface ProductProps {
 	id: number;
 	name: string;

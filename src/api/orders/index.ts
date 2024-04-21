@@ -65,3 +65,27 @@ export const useOrderDetails = (id: number) => {
 		}
 	});
 };
+
+export const useInsertOrder = () => {
+	const queryClient = useQueryClient();
+
+	const { session } = useAuth();
+	const userId = session?.user.id;
+
+	return useMutation({
+		async mutationFn(data: InsertTables<'orders'>) {
+			const { data: newOrder, error } = await supabase
+				.from('orders')
+				.insert({ ...data, user_id: userId })
+				.select()
+				.single();
+
+			if (error) throw new Error(error.message);
+
+			return newOrder;
+		},
+		async onSuccess() {
+			await queryClient.invalidateQueries({ queryKey: ['products'] });
+		}
+	});
+};

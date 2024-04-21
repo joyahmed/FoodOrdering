@@ -1,4 +1,6 @@
+import { useInsertOrder } from '@/api/orders';
 import { randomUUID } from 'expo-crypto';
+import { useRouter } from 'expo-router';
 import {
 	PropsWithChildren,
 	createContext,
@@ -13,17 +15,23 @@ interface CartContextProps {
 	addItem: (product: Product, size: CartItemProps['size']) => void;
 	updateQuantity: (itemId: string, amount: -1 | 1) => void;
 	total: number;
+	checkout: () => void;
 }
 
 export const CartContext = createContext<CartContextProps>({
 	items: [],
 	addItem: () => {},
 	updateQuantity: () => {},
-	total: 0
+	total: 0,
+	checkout: () => {}
 });
 
 const CartProvider = ({ children }: PropsWithChildren) => {
 	const [items, setItems] = useState<CartItemProps[]>([]);
+
+	const { mutate: insertOrder } = useInsertOrder();
+
+	const router = useRouter();
 
 	const addItem = (product: Product, size: CartItemProps['size']) => {
 		// if already in cart, increment quantity
@@ -65,9 +73,25 @@ const CartProvider = ({ children }: PropsWithChildren) => {
 		0
 	);
 
+	const clearCart = () => {
+		setItems([]);
+	};
+
+	const checkout = () => {
+		insertOrder(
+			{ total },
+			{
+				onSuccess: data => {
+					clearCart();
+					router.push(`/(user)/orders/${data.id}`);
+				}
+			}
+		);
+	};
+
 	return (
 		<CartContext.Provider
-			value={{ items, addItem, updateQuantity, total }}
+			value={{ items, addItem, updateQuantity, total, checkout }}
 		>
 			{children}
 		</CartContext.Provider>
