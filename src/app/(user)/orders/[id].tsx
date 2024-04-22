@@ -1,4 +1,5 @@
 import { useOrderDetails } from '@/api/orders';
+import { useUpdateOrderSubscription } from '@/api/orders/subscriptions';
 import OrderListItem from '@/components/OrderListItem';
 import OrderListItemDetail from '@/components/OrderListItemDetail';
 import { Stack } from 'expo-router';
@@ -15,6 +16,8 @@ const OrderDetailsScreen = () => {
 	const id = useParsedId();
 
 	const { data: order, isLoading, error } = useOrderDetails(id);
+
+	useUpdateOrderSubscription(id)
 
 	if (isLoading) return <ActivityIndicator />;
 

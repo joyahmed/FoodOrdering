@@ -1,5 +1,5 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Tabs, withLayoutContext } from 'expo-router';
+import { withLayoutContext } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const TopTabs = withLayoutContext(
@@ -10,11 +10,11 @@ const OrderListNavigator = () => {
 	return (
 		<SafeAreaView
 			edges={['top']}
-			style={{ flex: 1, backgroundColor: 'white' }}
+			style={{ flex: 1, paddingTop: -10, backgroundColor: 'white' }}
 		>
-      <TopTabs>
-        <TopTabs.Screen name='index' options={{title: 'Active'}} />
-      </TopTabs>
+			<TopTabs>
+				<TopTabs.Screen name='index' options={{ title: 'Active' }} />
+			</TopTabs>
 		</SafeAreaView>
 	);
 };
