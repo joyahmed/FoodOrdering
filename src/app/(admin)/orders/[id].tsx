@@ -1,4 +1,4 @@
-import { useOrderDetails } from '@/api/orders';
+import { useOrderDetails, useUpdateOrder } from '@/api/orders';
 import OrderListItem from '@/components/OrderListItem';
 import OrderListItemDetail from '@/components/OrderListItemDetail';
 import Colors from '@/constants/Colors';
@@ -17,6 +17,11 @@ const OrderDetailsScreen = () => {
 	const id = useParsedId();
 
 	const { data: order, isLoading, error } = useOrderDetails(id);
+	const { mutate: updateOrder } = useUpdateOrder();
+
+	const updateStatus =  (status: string) => {
+		 updateOrder({ id: id, updatedFields: { status } });
+	};
 
 	if (isLoading) return <ActivityIndicator />;
 
@@ -54,7 +59,7 @@ const OrderDetailsScreen = () => {
 							{orderStatusList.map(status => (
 								<Pressable
 									key={status}
-									// onPress={() => updateStatus(status)}
+									onPress={() => updateStatus(status)}
 									style={{
 										borderColor: Colors.light.tint,
 										borderWidth: 1,
