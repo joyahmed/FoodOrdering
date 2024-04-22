@@ -1,8 +1,7 @@
 import { useOrderDetails } from '@/api/orders';
 import OrderListItem from '@/components/OrderListItem';
 import OrderListItemDetail from '@/components/OrderListItemDetail';
-import orders from '@assets/data/orders';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useParsedId } from 'hooks/useParsedId';
 import React from 'react';
 import {
@@ -19,7 +18,7 @@ const OrderDetailsScreen = () => {
 
 	if (isLoading) return <ActivityIndicator />;
 
-	if (error) return <Text>Failed to fetch products</Text>;
+	if (error || !order) return <Text>Failed to fetch orders</Text>;
 
 	return (
 		<View style={{ padding: 10, gap: 20, flex: 1 }}>
@@ -30,16 +29,12 @@ const OrderDetailsScreen = () => {
 				}}
 			/>
 
-			{order && order?.order_items ? (
-				<FlatList
-					data={order.order_items}
-					renderItem={({ item }) => (
-						<OrderListItemDetail item={item} />
-					)}
-					contentContainerStyle={{ gap: 10 }}
-					ListHeaderComponent={() => <OrderListItem {...{ order }} />}
-				/>
-			) : null}
+			<FlatList
+				data={order.order_items}
+				renderItem={({ item }) => <OrderListItemDetail item={item} />}
+				contentContainerStyle={{ gap: 10 }}
+				ListHeaderComponent={() => <OrderListItem {...{ order }} />}
+			/>
 		</View>
 	);
 };

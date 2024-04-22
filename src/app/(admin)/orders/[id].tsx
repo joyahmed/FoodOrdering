@@ -20,7 +20,7 @@ const OrderDetailsScreen = () => {
 
 	if (isLoading) return <ActivityIndicator />;
 
-	if (error) return <Text>Failed to fetch products</Text>;
+	if (error || !order) return <Text>Failed to fetch orders</Text>;
 
 	const orderStatusList: OrderStatus[] = [
 		'New',
@@ -42,51 +42,47 @@ const OrderDetailsScreen = () => {
 				}}
 			/>
 
-			{order && order.order_items ? (
-				<FlatList
-					data={order.order_items}
-					renderItem={({ item }) => (
-						<OrderListItemDetail item={item} />
-					)}
-					contentContainerStyle={{ gap: 10 }}
-					ListHeaderComponent={() => <OrderListItem order={order} />}
-					ListFooterComponent={() => (
-						<>
-							<Text style={{ fontWeight: 'bold' }}>Status</Text>
-							<View style={{ flexDirection: 'row', gap: 5 }}>
-								{orderStatusList.map(status => (
-									<Pressable
-										key={status}
-										// onPress={() => updateStatus(status)}
+			<FlatList
+				data={order.order_items}
+				renderItem={({ item }) => <OrderListItemDetail item={item} />}
+				contentContainerStyle={{ gap: 10 }}
+				ListHeaderComponent={() => <OrderListItem order={order} />}
+				ListFooterComponent={() => (
+					<>
+						<Text style={{ fontWeight: 'bold' }}>Status</Text>
+						<View style={{ flexDirection: 'row', gap: 5 }}>
+							{orderStatusList.map(status => (
+								<Pressable
+									key={status}
+									// onPress={() => updateStatus(status)}
+									style={{
+										borderColor: Colors.light.tint,
+										borderWidth: 1,
+										padding: 10,
+										borderRadius: 5,
+										marginVertical: 10,
+										backgroundColor:
+											order.status === status
+												? Colors.light.tint
+												: 'transparent'
+									}}
+								>
+									<Text
 										style={{
-											borderColor: Colors.light.tint,
-											borderWidth: 1,
-											padding: 10,
-											borderRadius: 5,
-											marginVertical: 10,
-											backgroundColor:
+											color:
 												order.status === status
-													? Colors.light.tint
-													: 'transparent'
+													? 'white'
+													: Colors.light.tint
 										}}
 									>
-										<Text
-											style={{
-												color:
-													order.status === status
-														? 'white'
-														: Colors.light.tint
-											}}
-										>
-											{status}
-										</Text>
-									</Pressable>
-								))}
-							</View>
-						</>
-					)}
-				/>
-			) : null}
+										{status}
+									</Text>
+								</Pressable>
+							))}
+						</View>
+					</>
+				)}
+			/>
 		</View>
 	);
 };
